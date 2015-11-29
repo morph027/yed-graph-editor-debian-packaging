@@ -1,0 +1,46 @@
+#!/bin/bash
+
+PREREQS=( "bsdtar" "curl" "fpm" )
+
+error() {
+echo $1
+exit 1
+}
+
+check_prereq() {
+local PACKAGE=$1
+which $PACKAGE >/dev/null || error "$PACKAGE is missing"
+}
+
+download_yed() {
+local URL="http://www.yworks.com/products/yed/demo/yEd-${VERSION}.zip"
+curl -s --head --fail --connect-timeout 2 "$URL" -o /dev/null || error "${URL}.zip does not exist"
+curl -sL ${URL} | bsdtar -xf-
+mv yed-$VERSION yed
+mv yed package_root/usr/share/yed
+}
+
+create_deb() {
+fpm -s dir -t deb -n yed \
+--version "$VERSION" \
+--after-install scripts/after-install \
+--depends "java-runtime" \
+-C package_root \
+usr tmp
+}
+
+cleanup() {
+rm -rf package_root/usr/share/yed
+}
+
+if [ $# -ge 1 ]; then
+  VERSION=$1
+  for PREREQ in ${PREREQS[@]}
+  do
+    check_prereq $PREREQ
+  done
+  download_yed
+  create_deb
+else
+  exit "parameter version missing"
+fi
