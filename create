@@ -20,7 +20,7 @@ mv yed-$VERSION yed
 mv yed package_root/usr/share/yed
 }
 
-create_deb() {
+create_package() {
 fpm -s dir -t deb -n yed \
 --version "$VERSION" \
 --after-install scripts/after-install \
@@ -40,7 +40,7 @@ if [ $# -ge 1 ]; then
     check_prereq $PREREQ
   done
   download_yed
-  create_deb
+  create_package
 else
   exit "parameter version missing"
 fi
