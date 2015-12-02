@@ -41,6 +41,7 @@ if [ $# -ge 1 ]; then
   done
   download_yed
   create_package
+  cleanup
 else
   exit "parameter version missing"
 fi
