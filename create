@@ -14,7 +14,7 @@ which $PACKAGE >/dev/null || error "$PACKAGE is missing"
 
 download_yed() {
 local URL="http://www.yworks.com/products/yed/demo/yEd-${VERSION}.zip"
-curl -s --head --fail --connect-timeout 2 "$URL" -o /dev/null || error "${URL}.zip does not exist"
+curl -s --head --fail --connect-timeout 2 "$URL" -o /dev/null || error "${URL} does not exist"
 curl -sL ${URL} | bsdtar -xf-
 mv yed-$VERSION yed
 mv yed package_root/usr/share/yed
