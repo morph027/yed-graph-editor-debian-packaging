@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Icon=yed
+Icon=/usr/share/yed/icons/yed.ico
 Exec=yed %f
 StartupNotify=true
 StartupWMClass=B-A-A-B
